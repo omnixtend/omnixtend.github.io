@@ -110,4 +110,4 @@ TileLink messages are encapsulated into OmniXtend packets structured as:
 
 ---
 
-For more details on FPGA integration and implementation, see [Hardware Setup](docs/hardware-setup.md).
+For more details on FPGA integration and implementation, see [Hardware Setup](hardware-setup.md).

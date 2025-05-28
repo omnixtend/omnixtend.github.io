@@ -48,6 +48,6 @@ To-be defined
 
 ## 🧭 Where to go next?
 
-- [Hardware Setup](docs/hardware-setup.md): Detailed FPGA board configuration
-- [Software Stack](docs/software.md): Drivers, firmware, and debugging
-- [Tutorials](docs/tutorials.md): Guided hands-on examples
+- [Hardware Setup](hardware-setup.md): Detailed FPGA board configuration
+- [Software Stack](software-stack.md): Drivers, firmware, and debugging
+- [Tutorials](tutorials.md): Guided hands-on examples
