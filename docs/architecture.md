@@ -18,7 +18,7 @@ This section introduces the architectural design of the OmniXtend protocol and i
 
 ## 🧩 Layered Architecture
 
-OmniXtend is built as a layered, modular stack to facilitate memory disaggregation and cache-coherent communication across compute and memory nodes via Ethernet.
+OmniXtend is built as a layered, modular stack to facilitate memory disaggregation and cache-coherent communication across compute and memory nodes **directly over the MAC layer**, bypassing higher-level protocols like UDP or TCP.
 
 ```
 +----------------------------+
@@ -28,7 +28,7 @@ OmniXtend is built as a layered, modular stack to facilitate memory disaggregati
 +----------------------------+
 | Packetizer / Depacketizer |
 +----------------------------+
-| UDP over Ethernet         |
+| Ethernet MAC Layer        |
 +----------------------------+
 | Physical Ethernet         |
 +----------------------------+
@@ -46,13 +46,11 @@ OmniXtend is built as a layered, modular stack to facilitate memory disaggregati
 
 ## 📦 Packet Format
 
-TileLink messages are encapsulated into OmniXtend packets structured as:
+TileLink messages are encapsulated directly into OmniXtend Ethernet frames structured as:
 
 ```
 +-------------------+
 | Ethernet Header   |
-+-------------------+
-| UDP Header        |
 +-------------------+
 | OmniXtend Header  |
 +-------------------+
@@ -60,6 +58,7 @@ TileLink messages are encapsulated into OmniXtend packets structured as:
 +-------------------+
 ```
 
+- **No TCP/IP or UDP is used** — packets are exchanged at the **MAC layer**.
 - **OmniXtend Header** includes:
   - Source/Destination node IDs
   - Channel type (A, B, C, D, E)
@@ -70,20 +69,21 @@ TileLink messages are encapsulated into OmniXtend packets structured as:
 
 ## 🧠 Memory Node (Responder)
 
-- Receives TileLink packets over Ethernet
+- Receives TileLink packets over Ethernet MAC
 - Decodes and services memory requests
 - Interfaces with **external DRAM** via AXI4 or native memory controller
-- Can be implemented using FPGAs or SoCs
+- Typically implemented using FPGAs or specialized SoCs
 
 ---
 
 ## 🖧 Ethernet Fabric
 
-- Any standard Ethernet switch can be used (no need for custom interconnects)
-- Supports:
+- OmniXtend requires only standard Ethernet switches with MAC-level forwarding
+- No IP configuration is needed
+- Topologies supported:
   - Point-to-point links
   - Multi-drop (with broadcast)
-  - Tree or mesh topologies
+  - Tree or mesh configurations
 
 ---
 
@@ -93,7 +93,7 @@ TileLink messages are encapsulated into OmniXtend packets structured as:
 
 ```
 +------------------+         +------------------+
-| RISC-V SoC       |  UDP    | FPGA-based       |
+| RISC-V SoC       |  Eth    | FPGA-based       |
 | + TileLink Master| <-----> | TileLink Slave   |
 +------------------+         +------------------+
          |                            |
@@ -106,7 +106,10 @@ TileLink messages are encapsulated into OmniXtend packets structured as:
 
 - Supports multi-master systems with arbitration
 - Extensible for different memory types (HBM, CXL, DDR)
-- Future work: reliability, security (MAC/IPsec), multicast
+- Future work includes:
+  - Packet reliability
+  - Security enhancements (e.g., MACsec)
+  - Multicast/broadcast support for coherency
 
 ---
 
