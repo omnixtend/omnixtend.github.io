@@ -4,18 +4,15 @@ nav_order: 3
 ---
 
 # Architecture
+{: .no_toc }
+
+This section introduces the architectural design of the OmniXtend protocol and its core components.
 
 ## Table of contents
 {: .no_toc .text-delta }
 
 1. TOC
 {:toc}
-
----
-
-# Architecture
-
-This section introduces the architectural design of the OmniXtend protocol and its core components.
 
 ---
 

@@ -4,18 +4,15 @@ nav_order: 2
 ---
 
 # Getting Started
+{: .no_toc }
+
+This section will help you set up your development environment and run your first OmniXtend test system.
 
 ## Table of contents
 {: .no_toc .text-delta }
 
 1. TOC
 {:toc}
-
----
-
-# Getting Started
-
-This section will help you set up your development environment and run your first OmniXtend test system.
 
 ---
 
